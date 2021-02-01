@@ -1,0 +1,5 @@
+include ':view'
+include ':gazetracker-release'
+include ':libgaze-release'
+include ':app'
+rootProject.name = "EyePath"

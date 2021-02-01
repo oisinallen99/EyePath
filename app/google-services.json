@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "720356083791",
+    "project_id": "eyepath-ee0c8",
+    "storage_bucket": "eyepath-ee0c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720356083791:android:099d3323baeb1c94cc423a",
+        "android_client_info": {
+          "package_name": "com.example.eyepath"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720356083791-pokpjc7kjgoqio4q5pvbfkbvugsu6eju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZSmcympWAsiGY_4FDaNAl7uxWjqJoCAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720356083791-pokpjc7kjgoqio4q5pvbfkbvugsu6eju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
