@@ -8,6 +8,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
@@ -16,6 +17,9 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
@@ -61,6 +65,13 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         initView();
         checkPermission();
         initHandler();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 
     private void initHandler() {
@@ -546,9 +557,21 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         }
     }
 
-    private void removeCameraPreview() {
-        if (isGazeNonNull()) {
-            gazeTracker.removeCameraPreview();
-        }
+    public void launchMaps(MenuItem item) {
+        releaseGaze();
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void logout(MenuItem item) {
+        releaseGaze();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void eyeGaze(MenuItem item) {
+        releaseGaze();
+        Intent intent = new Intent(this, ConfigureEyeGaze.class);
+        startActivity(intent);
     }
 }

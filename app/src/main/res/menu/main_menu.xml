@@ -10,8 +10,14 @@
 
     <item
         android:id="@+id/action_add1"
-        android:title="View wheelchair accessible locations"
-        android:onClick="logout"
+        android:onClick="launchMaps"
+        android:title="Maps"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_add2"
+        android:onClick="eyeGaze"
+        android:title="EyeGaze"
         app:showAsAction="never" />
 
 </menu>
