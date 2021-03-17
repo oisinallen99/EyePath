@@ -11,6 +11,10 @@ public class Location {
         this.review = review;
     }
 
+    public Location(){
+
+    }
+
     public String getLocationName() {
         return locationName;
     }

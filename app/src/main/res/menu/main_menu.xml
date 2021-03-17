@@ -20,4 +20,10 @@
         android:title="EyeGaze"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/action_add3"
+        android:onClick="testEyeClick"
+        android:title="Test EyeClick"
+        app:showAsAction="never" />
+
 </menu>

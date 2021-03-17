@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EyePath">
-        <activity android:name=".LocationSubmitted"></activity>
+        <activity android:name=".testEyeClick"></activity>
+        <activity android:name=".LocationSubmitted" />
         <activity android:name=".CreateLocation" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

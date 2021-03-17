@@ -10,23 +10,28 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import camp.visual.gazetracker.GazeTracker;
 import camp.visual.gazetracker.callback.CalibrationCallback;
@@ -39,13 +44,14 @@ import camp.visual.gazetracker.constant.StatusErrorType;
 import camp.visual.gazetracker.device.GazeDevice;
 import camp.visual.gazetracker.filter.OneEuroFilterManager;
 import camp.visual.gazetracker.gaze.GazeInfo;
+import camp.visual.gazetracker.state.EyeMovementState;
 import camp.visual.gazetracker.state.ScreenState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
 import visual.camp.sample.view.CalibrationViewer;
 import visual.camp.sample.view.PointView;
 
-public class ConfigureEyeGaze extends AppCompatActivity {
+public class testEyeClick extends AppCompatActivity {
 
     private static final String[] PERMISSIONS = new String[]
             {Manifest.permission.CAMERA};
@@ -59,13 +65,12 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configure_eye_gaze);
-        Log.i(TAG, "sdk version : " + GazeTracker.getVersionName());
-
+        setContentView(R.layout.activity_test_eye_click);
         initView();
         checkPermission();
         initHandler();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,9 +153,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     private TextureView preview;
     private View viewWarningTracking;
     private PointView viewPoint;
-    private Button btnInitGaze, btnReleaseGaze;
-    private Button btnStartTracking, btnStopTracking;
-    private Button btnStartCalibration, btnStopCalibration, btnSetCalibration;
+
     private CalibrationViewer viewCalibration;
 
     // gaze coord filter
@@ -170,24 +173,6 @@ public class ConfigureEyeGaze extends AppCompatActivity {
 
         preview = findViewById(R.id.preview);
         preview.setSurfaceTextureListener(surfaceTextureListener);
-
-        btnInitGaze = findViewById(R.id.btn_init_gaze);
-        btnReleaseGaze = findViewById(R.id.btn_release_gaze);
-        btnInitGaze.setOnClickListener(onClickListener);
-        btnReleaseGaze.setOnClickListener(onClickListener);
-
-        btnStartTracking = findViewById(R.id.btn_start_tracking);
-        btnStopTracking = findViewById(R.id.btn_stop_tracking);
-        btnStartTracking.setOnClickListener(onClickListener);
-        btnStopTracking.setOnClickListener(onClickListener);
-
-        btnStartCalibration = findViewById(R.id.btn_start_calibration);
-        btnStopCalibration = findViewById(R.id.btn_stop_calibration);
-        btnStartCalibration.setOnClickListener(onClickListener);
-        btnStopCalibration.setOnClickListener(onClickListener);
-
-        btnSetCalibration = findViewById(R.id.btn_set_calibration);
-        btnSetCalibration.setOnClickListener(onClickListener);
 
         viewPoint = findViewById(R.id.view_point);
         viewCalibration = findViewById(R.id.view_calibration);
@@ -254,32 +239,13 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == btnInitGaze) {
-                initGaze();
-            } else if (v == btnReleaseGaze) {
-                releaseGaze();
-            } else if (v == btnStartTracking) {
-                startTracking();
-            } else if (v == btnStopTracking) {
-                stopTracking();
-            } else if (v == btnStartCalibration) {
-                startCalibration();
-            } else if (v == btnStopCalibration) {
-                stopCalibration();
-            } else if (v == btnSetCalibration) {
-                setCalibration();
-            }
-        }
-    };
+
 
     private void showToast(final String msg, final boolean isShort) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(ConfigureEyeGaze.this, msg, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+                Toast.makeText(testEyeClick.this, msg, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -329,13 +295,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                btnInitGaze.setEnabled(!isGazeNonNull());
-                btnReleaseGaze.setEnabled(isGazeNonNull());
-                btnStartTracking.setEnabled(isGazeNonNull() && !isTracking());
-                btnStopTracking.setEnabled(isGazeNonNull() && isTracking());
-                btnStartCalibration.setEnabled(isGazeNonNull() && isTracking());
-                btnStopCalibration.setEnabled(isGazeNonNull() && isTracking());
-                btnSetCalibration.setEnabled(isGazeNonNull());
+
                 if (!isTracking()) {
                     hideCalibrationView();
                 }
@@ -415,8 +375,38 @@ public class ConfigureEyeGaze extends AppCompatActivity {
                 }
                 Log.i(TAG, "check eyeMovement " + gazeInfo.eyeMovementState);
             }
+
+            // Test Eye Click
+            Log.i(TAG, "Gaze coord x: "+  gazeInfo.x +" , Gaze coord y: " + gazeInfo.y);
+
+            final Button button = (Button) findViewById(R.id.my_button);
+            final DisplayMetrics displaymetrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            Point point = getPointOfView(button);
+        //    Toast.makeText(testEyeClick.this,"button point x,y (" + point.x + ", " + point.y + ")",Toast.LENGTH_LONG).show();
+
+            if(gazeInfo.x > point.x-200 && gazeInfo.x < point.x+200 && gazeInfo.y > point.y-200 && gazeInfo.y < point.y+200) {
+                if(gazeInfo.eyeMovementState == EyeMovementState.FIXATION){
+                    Toast.makeText(testEyeClick.this,"Click",Toast.LENGTH_LONG).show();
+                    Random R = new Random();
+                     final float dx = R.nextFloat() * displaymetrics.widthPixels;
+                     final float dy = R.nextFloat() * displaymetrics.heightPixels;
+                    button.animate()
+                            .x(dx)
+                            .y(dy)
+                            .setDuration(0)
+                            .start();
+
+                    }
+                }
         }
     };
+
+    private Point getPointOfView(View view) {
+        int[] location = new int[2];
+        view.getLocationInWindow(location);
+        return new Point(location[0], location[1]);
+    }
 
     private CalibrationCallback calibrationCallback = new CalibrationCallback() {
         @Override
@@ -578,4 +568,13 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         Intent intent = new Intent(this, testEyeClick.class);
         startActivity(intent);
     }
+
+    public void SuccessfulClick(View view) {
+        releaseGaze();
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
 }
+
+
+

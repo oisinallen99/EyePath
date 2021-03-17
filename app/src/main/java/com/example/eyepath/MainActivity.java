@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(MainActivity.this, "User signed in", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), ConfigureEyeGaze.class);
                             startActivity(intent);
                         } else {
                             Log.w("MySignin", "SignInUserWithEmail:failure", task.getException());
