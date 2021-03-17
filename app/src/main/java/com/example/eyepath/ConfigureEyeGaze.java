@@ -163,31 +163,12 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     private AppCompatTextView txtGazeVersion;
 
     private void initView() {
-        txtGazeVersion = findViewById(R.id.txt_gaze_version);
-        txtGazeVersion.setText("version: " + GazeTracker.getVersionName());
 
         viewWarningTracking = findViewById(R.id.view_warning_tracking);
 
         preview = findViewById(R.id.preview);
         preview.setSurfaceTextureListener(surfaceTextureListener);
 
-        btnInitGaze = findViewById(R.id.btn_init_gaze);
-        btnReleaseGaze = findViewById(R.id.btn_release_gaze);
-        btnInitGaze.setOnClickListener(onClickListener);
-        btnReleaseGaze.setOnClickListener(onClickListener);
-
-        btnStartTracking = findViewById(R.id.btn_start_tracking);
-        btnStopTracking = findViewById(R.id.btn_stop_tracking);
-        btnStartTracking.setOnClickListener(onClickListener);
-        btnStopTracking.setOnClickListener(onClickListener);
-
-        btnStartCalibration = findViewById(R.id.btn_start_calibration);
-        btnStopCalibration = findViewById(R.id.btn_stop_calibration);
-        btnStartCalibration.setOnClickListener(onClickListener);
-        btnStopCalibration.setOnClickListener(onClickListener);
-
-        btnSetCalibration = findViewById(R.id.btn_set_calibration);
-        btnSetCalibration.setOnClickListener(onClickListener);
 
         viewPoint = findViewById(R.id.view_point);
         viewCalibration = findViewById(R.id.view_calibration);
@@ -329,13 +310,6 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                btnInitGaze.setEnabled(!isGazeNonNull());
-                btnReleaseGaze.setEnabled(isGazeNonNull());
-                btnStartTracking.setEnabled(isGazeNonNull() && !isTracking());
-                btnStopTracking.setEnabled(isGazeNonNull() && isTracking());
-                btnStartCalibration.setEnabled(isGazeNonNull() && isTracking());
-                btnStopCalibration.setEnabled(isGazeNonNull() && isTracking());
-                btnSetCalibration.setEnabled(isGazeNonNull());
                 if (!isTracking()) {
                     hideCalibrationView();
                 }
@@ -369,10 +343,9 @@ public class ConfigureEyeGaze extends AppCompatActivity {
 
     private void initSuccess(GazeTracker gazeTracker) {
         this.gazeTracker = gazeTracker;
-        if (preview.isAvailable()) {
-            // When if textureView available
-            setCameraPreview(preview);
-        }
+       /* if (preview.isAvailable()) {
+           setCameraPreview(preview);
+       } */
         this.gazeTracker.setCallbacks(gazeCallback, calibrationCallback, statusCallback);
         startTracking();
     }

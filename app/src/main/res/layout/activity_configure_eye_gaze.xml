@@ -4,87 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/eyewallpaper"
     tools:context=".ConfigureEyeGaze">
+
     <TextureView
         android:id="@+id/preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
     <View
         android:id="@+id/view_warning_tracking"
-        android:visibility="invisible"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
     <LinearLayout
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="visible"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <Button
-            android:id="@+id/btn_init_gaze"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="init gaze" />
-        <Button
-            android:id="@+id/btn_release_gaze"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="release gaze" />
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="400dp">
 
         <Button
-            android:id="@+id/btn_start_tracking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="start tracking" />
-        <Button
-            android:id="@+id/btn_stop_tracking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="stop tracking" />
+            android:id="@+id/Button1"
+            android:layout_width="97dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:text="1" />
+
+        <View
+            android:layout_width="68dp"
+            android:layout_height="86dp"
+            android:layout_weight="2" />
 
         <Button
-            android:id="@+id/btn_start_calibration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="start calibration" />
-        <Button
-            android:id="@+id/btn_stop_calibration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="stop calibration" />
-        <Button
-            android:id="@+id/btn_set_calibration"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="set calibration" />
+            android:id="@+id/Button2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_weight="3"
+            android:text="2" />
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="520dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp">
 
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_gaze_version"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_blue_bright"
-        android:text="version:"/>
+        <Button
+            android:id="@+id/Button3"
+            android:layout_width="97dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:text="View Progress" />
 
+    </LinearLayout>
 
     <visual.camp.sample.view.PointView
         android:id="@+id/view_point"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
 
     <visual.camp.sample.view.CalibrationViewer
         android:id="@+id/view_calibration"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+
+    </visual.camp.sample.view.CalibrationViewer>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
