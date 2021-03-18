@@ -148,9 +148,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     private TextureView preview;
     private View viewWarningTracking;
     private PointView viewPoint;
-    private Button btnInitGaze, btnReleaseGaze;
-    private Button btnStartTracking, btnStopTracking;
-    private Button btnStartCalibration, btnStopCalibration, btnSetCalibration;
+    Button btn1, btn2, btn3;
     private CalibrationViewer viewCalibration;
 
     // gaze coord filter
@@ -158,11 +156,30 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     private boolean isUseGazeFilter = true;
     // calibration type
     private RadioGroup rgCalibration;
-    private CalibrationModeType calibrationType = CalibrationModeType.DEFAULT;
+    private CalibrationModeType calibrationType = CalibrationModeType.SIX_POINT;
 
     private AppCompatTextView txtGazeVersion;
 
     private void initView() {
+
+        btn1 = findViewById(R.id.Button1);
+        btn2 = findViewById(R.id.Button2);
+        btn3 = findViewById(R.id.Button3);
+
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfigureEyeGaze.this, testEyeClick.class);
+                startActivity(intent);
+            }
+        });
+
+        btn3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startCalibration();
+            }
+        });
 
         viewWarningTracking = findViewById(R.id.view_warning_tracking);
 
@@ -235,26 +252,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         });
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (v == btnInitGaze) {
-                initGaze();
-            } else if (v == btnReleaseGaze) {
-                releaseGaze();
-            } else if (v == btnStartTracking) {
-                startTracking();
-            } else if (v == btnStopTracking) {
-                stopTracking();
-            } else if (v == btnStartCalibration) {
-                startCalibration();
-            } else if (v == btnStopCalibration) {
-                stopCalibration();
-            } else if (v == btnSetCalibration) {
-                setCalibration();
-            }
-        }
-    };
+
 
     private void showToast(final String msg, final boolean isShort) {
         runOnUiThread(new Runnable() {
@@ -529,9 +527,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     }
 
     public void launchMaps(MenuItem item) {
-        releaseGaze();
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        startCalibration();
     }
 
     public void logout(MenuItem item) {

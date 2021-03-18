@@ -23,11 +23,11 @@
 
         <Button
             android:id="@+id/my_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="84dp"
+            android:layout_height="60dp"
             android:layout_x="0dp"
             android:layout_y="0dp"
-            android:text="Test" />
+            android:drawableLeft="@drawable/eyeicon" />
 </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -161,7 +161,7 @@ public class testEyeClick extends AppCompatActivity {
     private boolean isUseGazeFilter = true;
     // calibration type
     private RadioGroup rgCalibration;
-    private CalibrationModeType calibrationType = CalibrationModeType.DEFAULT;
+    private CalibrationModeType calibrationType = CalibrationModeType.SIX_POINT;
 
     private AppCompatTextView txtGazeVersion;
 
@@ -329,10 +329,10 @@ public class testEyeClick extends AppCompatActivity {
 
     private void initSuccess(GazeTracker gazeTracker) {
         this.gazeTracker = gazeTracker;
-        if (preview.isAvailable()) {
+      /*  if (preview.isAvailable()) {
             // When if textureView available
             setCameraPreview(preview);
-        }
+        } */
         this.gazeTracker.setCallbacks(gazeCallback, calibrationCallback, statusCallback);
         startTracking();
     }
@@ -387,10 +387,9 @@ public class testEyeClick extends AppCompatActivity {
 
             if(gazeInfo.x > point.x-200 && gazeInfo.x < point.x+200 && gazeInfo.y > point.y-200 && gazeInfo.y < point.y+200) {
                 if(gazeInfo.eyeMovementState == EyeMovementState.FIXATION){
-                    Toast.makeText(testEyeClick.this,"Click",Toast.LENGTH_LONG).show();
                     Random R = new Random();
-                     final float dx = R.nextFloat() * displaymetrics.widthPixels;
-                     final float dy = R.nextFloat() * displaymetrics.heightPixels;
+                     final float dx = R.nextFloat() * (displaymetrics.widthPixels-200);
+                     final float dy = R.nextFloat() * (displaymetrics.heightPixels-200);
                     button.animate()
                             .x(dx)
                             .y(dy)
@@ -456,7 +455,6 @@ public class testEyeClick extends AppCompatActivity {
                         break;
                     case ERROR_CAMERA_INTERRUPT:
                         // When if camera stream interrupted
-                        showToast("ERROR_CAMERA_INTERRUPT ", false);
                         break;
                 }
             }
@@ -546,9 +544,7 @@ public class testEyeClick extends AppCompatActivity {
     }
 
     public void launchMaps(MenuItem item) {
-        releaseGaze();
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+        startCalibration();
     }
 
     public void logout(MenuItem item) {
@@ -563,17 +559,7 @@ public class testEyeClick extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void testEyeClick(MenuItem item) {
-        releaseGaze();
-        Intent intent = new Intent(this, testEyeClick.class);
-        startActivity(intent);
-    }
 
-    public void SuccessfulClick(View view) {
-        releaseGaze();
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-    }
 }
 
 

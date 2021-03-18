@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent intent = new Intent(getApplicationContext(), ConfigureEyeGaze.class);
+        startActivity(intent);
         mAuth = FirebaseAuth.getInstance();
         Log.i(TAG, "sdk version : " + GazeTracker.getVersionName());
     }
