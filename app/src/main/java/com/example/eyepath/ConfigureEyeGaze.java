@@ -564,8 +564,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
 
 
     public void logout(MenuItem item) {
-        releaseGaze();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, Info.class);
         startActivity(intent);
     }
 
