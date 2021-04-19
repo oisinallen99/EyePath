@@ -13,7 +13,6 @@
         android:layout_height="match_parent" />
 
    <include
-
        android:id="@+id/toolbar"
        layout="@layout/toolbar" />
 
@@ -27,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="130dp"
         android:layout_marginRight="50dp"
         android:orientation="horizontal">
 
@@ -36,10 +35,11 @@
             android:layout_width="317dp"
             android:layout_height="90dp"
             android:layout_weight="1"
-            android:background="@color/design_default_color_primary"
+            android:background="@drawable/custom_button"
             android:elevation="4dp"
             android:text="Exercise 1"
-            android:textColor="@color/white" />
+            android:textColor="@color/design_default_color_primary"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="230dp"
         android:layout_marginRight="50dp"
         android:orientation="horizontal">
 
@@ -56,10 +56,10 @@
             android:layout_width="80dp"
             android:layout_height="90dp"
             android:layout_weight="3"
-            android:background="@color/design_default_color_primary"
-            android:textColor="@color/white"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/design_default_color_primary"
             android:text="Exercise 2"
-            android:elevation="4dp" />
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 
@@ -67,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="330dp"
         android:layout_marginRight="50dp"
         android:orientation="horizontal">
 
@@ -76,10 +76,10 @@
             android:layout_width="80dp"
             android:layout_height="90dp"
             android:layout_weight="3"
-            android:background="@color/design_default_color_primary"
-            android:textColor="@color/white"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/design_default_color_primary"
             android:text="Exercise 3"
-            android:elevation="4dp" />
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 
@@ -87,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="490dp"
         android:layout_marginRight="50dp"
         android:orientation="horizontal">
 
@@ -97,10 +97,10 @@
             android:layout_width="97dp"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:background="@color/design_default_color_primary"
-            android:textColor="@color/white"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/design_default_color_primary"
             android:text="Start Calibration"
-            android:elevation="4dp"/>
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 
@@ -108,7 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="620dp"
+        android:layout_marginTop="590dp"
         android:layout_marginRight="50dp"
         android:orientation="horizontal">
 
@@ -118,10 +118,10 @@
             android:layout_width="97dp"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:background="@color/design_default_color_primary"
-            android:textColor="@color/white"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/design_default_color_primary"
             android:text="View Week Chart"
-            android:elevation="4dp"/>
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 

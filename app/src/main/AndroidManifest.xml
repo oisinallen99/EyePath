@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EyePath">
-        <activity android:name=".WeekChart"></activity>
+        <activity android:name=".Info"></activity>
+        <activity android:name=".WeekChart" />
         <activity android:name=".exercise2" />
         <activity android:name=".testEyeClick" />
         <activity android:name=".LocationSubmitted" />
