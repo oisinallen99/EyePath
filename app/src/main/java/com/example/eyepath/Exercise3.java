@@ -5,12 +5,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,8 +24,6 @@ import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -40,13 +38,14 @@ import camp.visual.gazetracker.constant.StatusErrorType;
 import camp.visual.gazetracker.device.GazeDevice;
 import camp.visual.gazetracker.filter.OneEuroFilterManager;
 import camp.visual.gazetracker.gaze.GazeInfo;
+import camp.visual.gazetracker.state.EyeMovementState;
 import camp.visual.gazetracker.state.ScreenState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
 import visual.camp.sample.view.CalibrationViewer;
 import visual.camp.sample.view.PointView;
 
-public class ConfigureEyeGaze extends AppCompatActivity {
+public class Exercise3 extends AppCompatActivity {
 
     private static final String[] PERMISSIONS = new String[]
             {Manifest.permission.CAMERA};
@@ -56,23 +55,15 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     private ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private HandlerThread backgroundThread = new HandlerThread("background");
     private Handler backgroundHandler;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configure_eye_gaze);
-        Log.i(TAG, "sdk version : " + GazeTracker.getVersionName());
-
-        toolbar=findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
+        setContentView(R.layout.activity_exercise3);
         initView();
         checkPermission();
         initHandler();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -151,10 +142,11 @@ public class ConfigureEyeGaze extends AppCompatActivity {
 
 
     // view
+    private Button btn1, btn2, btn3, btn4;
     private TextureView preview;
     private View viewWarningTracking;
     private PointView viewPoint;
-    private Button btn1, btn2, btn3, btn4, btn5;
+
     private CalibrationViewer viewCalibration;
 
     // gaze coord filter
@@ -170,46 +162,12 @@ public class ConfigureEyeGaze extends AppCompatActivity {
 
         btn1 = findViewById(R.id.Button1);
         btn2 = findViewById(R.id.Button2);
-        btn3 = findViewById(R.id.Button3);
         btn4 = findViewById(R.id.Button4);
-        btn5 = findViewById(R.id.Button5);
-
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ConfigureEyeGaze.this, testEyeClick.class);
-                startActivity(intent);
-            }
-        });
-
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ConfigureEyeGaze.this, exercise2.class);
-                startActivity(intent);
-            }
-        });
-
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ConfigureEyeGaze.this, Exercise3.class);
-                startActivity(intent);
-            }
-        });
 
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startCalibration();
-
-            }
-        });
-
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ConfigureEyeGaze.this, WeekChart.class);
+                Intent intent = new Intent(Exercise3.this, ConfigureEyeGaze.class);
                 startActivity(intent);
             }
         });
@@ -218,7 +176,6 @@ public class ConfigureEyeGaze extends AppCompatActivity {
 
         preview = findViewById(R.id.preview);
         preview.setSurfaceTextureListener(surfaceTextureListener);
-
 
         viewPoint = findViewById(R.id.view_point);
         viewCalibration = findViewById(R.id.view_calibration);
@@ -232,7 +189,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             // When if textureView available
-        //    setCameraPreview(preview);
+            //  setCameraPreview(preview);
         }
 
         @Override
@@ -291,7 +248,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(ConfigureEyeGaze.this, msg, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+                Toast.makeText(Exercise3.this, msg, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -341,6 +298,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
                 if (!isTracking()) {
                     hideCalibrationView();
                 }
@@ -374,9 +332,10 @@ public class ConfigureEyeGaze extends AppCompatActivity {
 
     private void initSuccess(GazeTracker gazeTracker) {
         this.gazeTracker = gazeTracker;
-       /* if (preview.isAvailable()) {
-           setCameraPreview(preview);
-       } */
+      /*  if (preview.isAvailable()) {
+            // When if textureView available
+            setCameraPreview(preview);
+        } */
         this.gazeTracker.setCallbacks(gazeCallback, calibrationCallback, statusCallback);
         startTracking();
     }
@@ -419,8 +378,10 @@ public class ConfigureEyeGaze extends AppCompatActivity {
                 }
                 Log.i(TAG, "check eyeMovement " + gazeInfo.eyeMovementState);
             }
+
         }
     };
+
 
     private CalibrationCallback calibrationCallback = new CalibrationCallback() {
         @Override
@@ -446,7 +407,6 @@ public class ConfigureEyeGaze extends AppCompatActivity {
             CalibrationDataStorage.saveCalibrationData(getApplicationContext(), calibrationData);
             hideCalibrationView();
             showToast("calibrationFinished", true);
-            toolbar.setVisibility(View.VISIBLE);
         }
     };
 
@@ -464,16 +424,7 @@ public class ConfigureEyeGaze extends AppCompatActivity {
             // When if camera stream stopping
             setViewAtGazeTrackerState();
             if (error != StatusErrorType.ERROR_NONE) {
-                switch (error) {
-                    case ERROR_CAMERA_START:
-                        // When if camera stream can't start
-                        showToast("ERROR_CAMERA_START ", false);
-                        break;
-                    case ERROR_CAMERA_INTERRUPT:
-                        // When if camera stream interrupted
-                        showToast("ERROR_CAMERA_INTERRUPT ", false);
-                        break;
-                }
+
             }
         }
     };
@@ -481,7 +432,6 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     private void initGaze() {
         GazeDevice gazeDevice = new GazeDevice();
         gazeDevice.addDeviceInfo("MyPhone", -49f, -5f);
-        // todo change licence key
         String licenseKey = "dev_pqgondamj6moi7y5dgj0akxr50do03ln6y9eqxdu";
         GazeTracker.initGazeTracker(getApplicationContext(), gazeDevice, licenseKey, initializationCallback);
     }
@@ -507,8 +457,6 @@ public class ConfigureEyeGaze extends AppCompatActivity {
     }
 
     private boolean startCalibration() {
-        toolbar=findViewById(R.id.toolbar);
-        toolbar.setVisibility(View.GONE);
         boolean isSuccess = false;
         if (isGazeNonNull()) {
             isSuccess = gazeTracker.startCalibration(calibrationType);
@@ -558,14 +506,25 @@ public class ConfigureEyeGaze extends AppCompatActivity {
 
     private void setCameraPreview(TextureView preview) {
         if (isGazeNonNull()) {
-        //    gazeTracker.setCameraPreview(preview);
+            //    gazeTracker.setCameraPreview(preview);
         }
     }
 
+    public void launchMaps(MenuItem item) {
+        startCalibration();
+    }
 
     public void logout(MenuItem item) {
-        Intent intent = new Intent(this, Info.class);
+        releaseGaze();
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    public void eyeGaze(MenuItem item) {
+        releaseGaze();
+        Intent intent = new Intent(this, ConfigureEyeGaze.class);
+        startActivity(intent);
+    }
+
 
 }
