@@ -150,6 +150,7 @@ public class testEyeClick extends AppCompatActivity {
 
 
     // view
+    private Button btn4;
     private TextureView preview;
     private View viewWarningTracking;
     private PointView viewPoint;
@@ -166,8 +167,16 @@ public class testEyeClick extends AppCompatActivity {
     private AppCompatTextView txtGazeVersion;
 
     private void initView() {
-        txtGazeVersion = findViewById(R.id.txt_gaze_version);
-        txtGazeVersion.setText("version: " + GazeTracker.getVersionName());
+
+        btn4 = findViewById(R.id.Button4);
+
+        btn4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(testEyeClick.this, ConfigureEyeGaze.class);
+                startActivity(intent);
+            }
+        });
 
         viewWarningTracking = findViewById(R.id.view_warning_tracking);
 
@@ -186,7 +195,7 @@ public class testEyeClick extends AppCompatActivity {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
             // When if textureView available
-            setCameraPreview(preview);
+          //  setCameraPreview(preview);
         }
 
         @Override
@@ -377,26 +386,24 @@ public class testEyeClick extends AppCompatActivity {
             }
 
             // Test Eye Click
-            Log.i(TAG, "Gaze coord x: "+  gazeInfo.x +" , Gaze coord y: " + gazeInfo.y);
 
             final Button button = (Button) findViewById(R.id.my_button);
             final DisplayMetrics displaymetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
             Point point = getPointOfView(button);
-        //    Toast.makeText(testEyeClick.this,"button point x,y (" + point.x + ", " + point.y + ")",Toast.LENGTH_LONG).show();
 
-            if(gazeInfo.x > point.x-200 && gazeInfo.x < point.x+200 && gazeInfo.y > point.y-200 && gazeInfo.y < point.y+200) {
-                if(gazeInfo.eyeMovementState == EyeMovementState.FIXATION){
-                    Random R = new Random();
-                     final float dx = R.nextFloat() * (displaymetrics.widthPixels-200);
-                     final float dy = R.nextFloat() * (displaymetrics.heightPixels-200);
-                    button.animate()
-                            .x(dx)
-                            .y(dy)
-                            .setDuration(0)
-                            .start();
+            if(gazeInfo.x > point.x-150 && gazeInfo.x < point.x+150 && gazeInfo.y > point.y-150 && gazeInfo.y < point.y+150) {
+                if(gazeInfo.eyeMovementState == EyeMovementState.FIXATION) {
+                                Random R = new Random();
+                                final float dx = R.nextFloat() * (displaymetrics.widthPixels - 400);
+                                final float dy = R.nextFloat() * (displaymetrics.heightPixels - 400);
+                                button.animate()
+                                        .x(dx)
+                                        .y(dy)
+                                        .setDuration(0)
+                                        .start();
 
-                    }
+                }
                 }
         }
     };
@@ -448,15 +455,7 @@ public class testEyeClick extends AppCompatActivity {
             // When if camera stream stopping
             setViewAtGazeTrackerState();
             if (error != StatusErrorType.ERROR_NONE) {
-                switch (error) {
-                    case ERROR_CAMERA_START:
-                        // When if camera stream can't start
-                        showToast("ERROR_CAMERA_START ", false);
-                        break;
-                    case ERROR_CAMERA_INTERRUPT:
-                        // When if camera stream interrupted
-                        break;
-                }
+
             }
         }
     };
@@ -539,7 +538,7 @@ public class testEyeClick extends AppCompatActivity {
 
     private void setCameraPreview(TextureView preview) {
         if (isGazeNonNull()) {
-            gazeTracker.setCameraPreview(preview);
+        //    gazeTracker.setCameraPreview(preview);
         }
     }
 

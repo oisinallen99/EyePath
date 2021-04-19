@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/action_add"
-        android:title="logout"
+        android:id="@+id/menu_info"
+        android:icon="@drawable/info"
         android:onClick="logout"
-        app:showAsAction="ifRoom" />
-
-
-    <item
-        android:id="@+id/action_add1"
-        android:onClick="launchMaps"
-        android:title="Calibration"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_add2"
-        android:onClick="eyeGaze"
-        android:title="EyeGaze"
-        app:showAsAction="never" />
-
+        app:showAsAction="ifRoom"
+        android:title=" " />
 
 </menu>

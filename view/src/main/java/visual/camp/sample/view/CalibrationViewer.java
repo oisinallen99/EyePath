@@ -101,7 +101,7 @@ public class CalibrationViewer extends ViewGroup {
   protected void onDraw(Canvas canvas) {
     super.onDraw(canvas);
     if (toDraw) {
-      canvas.drawCircle(x, y, 10, calibPoint);
+      canvas.drawCircle(x, y, 15, calibPoint);
     }
     if (msg != null) {
       drawText(canvas);
