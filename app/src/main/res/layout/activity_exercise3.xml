@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/exercise3_bg"
+    android:background="@drawable/eyepathwallpaperblue"
     tools:context=".Exercise3">
 
     <TextureView
@@ -23,17 +23,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="300dp">
+        android:layout_marginLeft="145dp"
+        android:layout_marginTop="350dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/my_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="102dp"
+            android:layout_height="101dp"
+            android:background="@drawable/custom_button2"
             android:drawableLeft="@drawable/eyeicon"
-            android:paddingLeft="15dp" />
+            android:paddingLeft="22dp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="145dp"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:text="00:30"
+            android:textSize="50dp"
+            android:textColor="@color/white"></TextView>
+    </LinearLayout>
 
 
     <LinearLayout
@@ -45,11 +61,13 @@
         android:layout_marginRight="120dp">
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/Button4"
             android:layout_width="97dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:background="@drawable/custom_button3"
+            android:textColor="@color/white"
             android:text="Return" />
 
     </LinearLayout>

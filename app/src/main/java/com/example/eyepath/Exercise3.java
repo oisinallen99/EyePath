@@ -329,10 +329,6 @@ public class Exercise3 extends AppCompatActivity {
 
     private void initSuccess(GazeTracker gazeTracker) {
         this.gazeTracker = gazeTracker;
-      /*  if (preview.isAvailable()) {
-            // When if textureView available
-            setCameraPreview(preview);
-        } */
         this.gazeTracker.setCallbacks(gazeCallback, calibrationCallback, statusCallback);
         startTracking();
     }
@@ -373,7 +369,6 @@ public class Exercise3 extends AppCompatActivity {
                 } else {
                     showTrackingWarning();
                 }
-                Log.i(TAG, "check eyeMovement " + gazeInfo.eyeMovementState);
             }
 
         }

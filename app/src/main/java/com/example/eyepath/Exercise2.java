@@ -66,9 +66,13 @@ public class Exercise2 extends AppCompatActivity {
         checkPermission();
         initHandler();
         count = 0;
+        openDialog();
     }
 
-
+    public void openDialog(){
+        Exercise2Dialog ex2Dialog = new Exercise2Dialog();
+        ex2Dialog.show(getSupportFragmentManager(), "exercise2 dialog");
+    }
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater inflater = getMenuInflater();
