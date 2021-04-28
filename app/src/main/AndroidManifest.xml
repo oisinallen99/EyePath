@@ -18,10 +18,8 @@
         <activity android:name=".Exercise3"></activity>
         <activity android:name=".Info" />
         <activity android:name=".WeekChart" />
-        <activity android:name=".exercise2" />
-        <activity android:name=".testEyeClick" />
-        <activity android:name=".LocationSubmitted" />
-        <activity android:name=".CreateLocation" />
+        <activity android:name=".Exercise2" />
+        <activity android:name=".Exercise1" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,7 +35,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".ConfigureEyeGaze" />
+        <activity android:name=".Menu" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

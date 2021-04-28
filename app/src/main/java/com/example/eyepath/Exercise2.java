@@ -17,21 +17,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
-import android.widget.AbsoluteLayout;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import camp.visual.gazetracker.GazeTracker;
 import camp.visual.gazetracker.callback.CalibrationCallback;
@@ -51,12 +44,12 @@ import camp.visual.gazetracker.util.ViewLayoutChecker;
 import visual.camp.sample.view.CalibrationViewer;
 import visual.camp.sample.view.PointView;
 
-public class exercise2 extends AppCompatActivity {
+public class Exercise2 extends AppCompatActivity {
 
     private static final String[] PERMISSIONS = new String[]
             {Manifest.permission.CAMERA};
     private static final int REQ_PERMISSION = 1000;
-    private static final String TAG = ConfigureEyeGaze.class.getSimpleName();
+    private static final String TAG = Menu.class.getSimpleName();
     private GazeTracker gazeTracker;
     private ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private HandlerThread backgroundThread = new HandlerThread("background");
@@ -73,7 +66,7 @@ public class exercise2 extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
@@ -175,7 +168,7 @@ public class exercise2 extends AppCompatActivity {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(exercise2.this, ConfigureEyeGaze.class);
+                Intent intent = new Intent(Exercise2.this, Menu.class);
                 startActivity(intent);
             }
         });
@@ -256,7 +249,7 @@ public class exercise2 extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(exercise2.this, msg, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
+                Toast.makeText(Exercise2.this, msg, isShort ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -548,7 +541,7 @@ public class exercise2 extends AppCompatActivity {
 
     public void eyeGaze(MenuItem item) {
         releaseGaze();
-        Intent intent = new Intent(this, ConfigureEyeGaze.class);
+        Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
     }
 

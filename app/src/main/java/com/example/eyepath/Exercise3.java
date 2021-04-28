@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.TextureView;
@@ -38,7 +36,6 @@ import camp.visual.gazetracker.constant.StatusErrorType;
 import camp.visual.gazetracker.device.GazeDevice;
 import camp.visual.gazetracker.filter.OneEuroFilterManager;
 import camp.visual.gazetracker.gaze.GazeInfo;
-import camp.visual.gazetracker.state.EyeMovementState;
 import camp.visual.gazetracker.state.ScreenState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
@@ -50,7 +47,7 @@ public class Exercise3 extends AppCompatActivity {
     private static final String[] PERMISSIONS = new String[]
             {Manifest.permission.CAMERA};
     private static final int REQ_PERMISSION = 1000;
-    private static final String TAG = ConfigureEyeGaze.class.getSimpleName();
+    private static final String TAG = Menu.class.getSimpleName();
     private GazeTracker gazeTracker;
     private ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private HandlerThread backgroundThread = new HandlerThread("background");
@@ -65,7 +62,7 @@ public class Exercise3 extends AppCompatActivity {
         initHandler();
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
@@ -167,7 +164,7 @@ public class Exercise3 extends AppCompatActivity {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Exercise3.this, ConfigureEyeGaze.class);
+                Intent intent = new Intent(Exercise3.this, Menu.class);
                 startActivity(intent);
             }
         });
@@ -522,7 +519,7 @@ public class Exercise3 extends AppCompatActivity {
 
     public void eyeGaze(MenuItem item) {
         releaseGaze();
-        Intent intent = new Intent(this, ConfigureEyeGaze.class);
+        Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
     }
 

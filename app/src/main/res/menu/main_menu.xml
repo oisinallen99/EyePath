@@ -5,8 +5,20 @@
     <item
         android:id="@+id/menu_info"
         android:icon="@drawable/info"
-        android:onClick="logout"
+        android:onClick="info"
         app:showAsAction="ifRoom"
         android:title=" " />
+
+    <item
+        android:id="@+id/item2"
+        android:onClick="refresh"
+        app:showAsAction="never"
+        android:title="Refresh" />
+
+    <item
+        android:id="@+id/item3"
+        android:onClick="logout"
+        app:showAsAction="never"
+        android:title="Logout" />
 
 </menu>

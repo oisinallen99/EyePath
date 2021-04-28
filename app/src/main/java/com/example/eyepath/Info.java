@@ -28,6 +28,16 @@ public class Info extends AppCompatActivity {
         return true;
     }
 
+    public void info(MenuItem item) {
+        Intent intent = new Intent(this, Info.class);
+        startActivity(intent);
+    }
+
+    public void refresh(MenuItem item) {
+        Intent intent = new Intent(this, Info.class);
+        startActivity(intent);
+    }
+
     public void logout(MenuItem item) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

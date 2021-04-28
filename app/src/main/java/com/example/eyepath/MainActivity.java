@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,17 +31,13 @@ public class MainActivity extends AppCompatActivity {
     String email;
     String password;
 
-    private static final String TAG = MainActivity.class.getSimpleName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(getApplicationContext(), ConfigureEyeGaze.class);
-        startActivity(intent);
         mAuth = FirebaseAuth.getInstance();
-        Log.i(TAG, "sdk version : " + GazeTracker.getVersionName());
     }
+
 
     public void signUp(View view) {
 
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "User Signed Up", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            Intent intent = new Intent(getApplicationContext(), ConfigureEyeGaze.class);
+                            Intent intent = new Intent(getApplicationContext(), Menu.class);
                             startActivity(intent);
                         } else {
                             Log.w("MyActivity", "createUserWithEmail:failure", task.getException());
@@ -90,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Toast.makeText(MainActivity.this, "User signed in", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(getApplicationContext(), ConfigureEyeGaze.class);
+                            Intent intent = new Intent(getApplicationContext(), Menu.class);
                             startActivity(intent);
                         } else {
                             Log.w("MySignin", "SignInUserWithEmail:failure", task.getException());
@@ -100,4 +98,5 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }
