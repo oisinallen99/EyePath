@@ -71,11 +71,11 @@ public class Exercise1 extends AppCompatActivity {
     }
 
     public void openDialogFinish(){
-        Exercise1FinishDialog ex1FinishDialog = new Exercise1FinishDialog();
+        ExerciseFinishDialog ex1FinishDialog = new ExerciseFinishDialog();
         ex1FinishDialog.show(getSupportFragmentManager(), "exercise1 finish dialog");
     }
 
-    private void openDialog(){
+    public void openDialog(){
         Exercise1Dialog ex1Dialog = new Exercise1Dialog();
         ex1Dialog.show(getSupportFragmentManager(), "exercise1 dialog");
     }

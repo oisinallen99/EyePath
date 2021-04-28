@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.Random;
+
 import camp.visual.gazetracker.GazeTracker;
 import camp.visual.gazetracker.callback.CalibrationCallback;
 import camp.visual.gazetracker.callback.GazeCallback;
@@ -37,7 +39,6 @@ import camp.visual.gazetracker.constant.StatusErrorType;
 import camp.visual.gazetracker.device.GazeDevice;
 import camp.visual.gazetracker.filter.OneEuroFilterManager;
 import camp.visual.gazetracker.gaze.GazeInfo;
-import camp.visual.gazetracker.state.EyeMovementState;
 import camp.visual.gazetracker.state.ScreenState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
@@ -54,6 +55,8 @@ public class Exercise2 extends AppCompatActivity {
     private ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private HandlerThread backgroundThread = new HandlerThread("background");
     private Handler backgroundHandler;
+    private int buttonCheck;
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class Exercise2 extends AppCompatActivity {
         initView();
         checkPermission();
         initHandler();
+        count = 0;
     }
 
 
@@ -143,7 +147,7 @@ public class Exercise2 extends AppCompatActivity {
 
 
     // view
-    private Button btn1, btn2, btn3, btn4;
+    private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7;
     private TextureView preview;
     private View viewWarningTracking;
     private PointView viewPoint;
@@ -163,7 +167,74 @@ public class Exercise2 extends AppCompatActivity {
 
         btn1 = findViewById(R.id.Button1);
         btn2 = findViewById(R.id.Button2);
+        btn3 = findViewById(R.id.Button3);
         btn4 = findViewById(R.id.Button4);
+        btn5 = findViewById(R.id.Button5);
+        btn6 = findViewById(R.id.Button6);
+        btn7 = findViewById(R.id.Button7);
+
+        btn1.setVisibility(View.INVISIBLE);
+        btn2.setVisibility(View.INVISIBLE);
+        btn3.setVisibility(View.INVISIBLE);
+
+        randomButton();
+
+        btn5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (buttonCheck == 1) {
+                    count++;
+                    randomButton();
+                    if (count == 5) {
+                        openDialogFinish();
+                    } else {
+                        Exercise2CorrectDialog exercise2CorrectDialog = new Exercise2CorrectDialog();
+                        exercise2CorrectDialog.show(getSupportFragmentManager(), "exercise2 correct dialog");
+                    }
+                }else {
+                    Exercise2IncorrectDialog exercise2IncorrectDialog = new Exercise2IncorrectDialog();
+                    exercise2IncorrectDialog.show(getSupportFragmentManager(), "exercise2 incorrect dialog");
+                }
+            }
+        });
+
+        btn6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (buttonCheck == 2) {
+                    count++;
+                    randomButton();
+                    if (count == 5) {
+                        openDialogFinish();
+                    } else {
+                        Exercise2CorrectDialog exercise2CorrectDialog = new Exercise2CorrectDialog();
+                        exercise2CorrectDialog.show(getSupportFragmentManager(), "exercise2 correct dialog");
+                    }
+                }else {
+                    Exercise2IncorrectDialog exercise2IncorrectDialog = new Exercise2IncorrectDialog();
+                    exercise2IncorrectDialog.show(getSupportFragmentManager(), "exercise2 incorrect dialog");
+                }
+            }
+        });
+
+        btn7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (buttonCheck == 3) {
+                    count++;
+                    randomButton();
+                    if (count == 5) {
+                        openDialogFinish();
+                    } else {
+                        Exercise2CorrectDialog exercise2CorrectDialog = new Exercise2CorrectDialog();
+                        exercise2CorrectDialog.show(getSupportFragmentManager(), "exercise2 correct dialog");
+                    }
+                }else {
+                    Exercise2IncorrectDialog exercise2IncorrectDialog = new Exercise2IncorrectDialog();
+                    exercise2IncorrectDialog.show(getSupportFragmentManager(), "exercise2 incorrect dialog");
+                }
+            }
+        });
 
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,6 +243,8 @@ public class Exercise2 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
 
         viewWarningTracking = findViewById(R.id.view_warning_tracking);
 
@@ -184,6 +257,28 @@ public class Exercise2 extends AppCompatActivity {
         setOffsetOfView();
     }
 
+    public void randomButton(){
+        Random random = new Random();
+        buttonCheck = random.nextInt(3 - 1 + 1) + 1;
+
+        if(buttonCheck == 1){
+            btn1.setVisibility(View.VISIBLE);
+            btn2.setVisibility(View.INVISIBLE);
+            btn3.setVisibility(View.INVISIBLE);
+        }
+
+        if(buttonCheck == 2){
+            btn2.setVisibility(View.VISIBLE);
+            btn1.setVisibility(View.INVISIBLE);
+            btn3.setVisibility(View.INVISIBLE);
+        }
+
+        if(buttonCheck == 3){
+            btn3.setVisibility(View.VISIBLE);
+            btn2.setVisibility(View.INVISIBLE);
+            btn1.setVisibility(View.INVISIBLE);
+        }
+    }
 
 
     private TextureView.SurfaceTextureListener surfaceTextureListener = new TextureView.SurfaceTextureListener() {
@@ -377,29 +472,14 @@ public class Exercise2 extends AppCompatActivity {
                 } else {
                     showTrackingWarning();
                 }
-                Log.i(TAG, "check eyeMovement " + gazeInfo.eyeMovementState);
             }
-
-            Point point1 = getPointOfView(btn1);
-            if(gazeInfo.x > point1.x-100 && gazeInfo.x < point1.x+100 && gazeInfo.y > point1.y-100 && gazeInfo.y < point1.y+100) {
-                if(gazeInfo.eyeMovementState == EyeMovementState.FIXATION) {
-                    showToast("Incorrect O", true);
-                }
-                }
-            Point point2 = getPointOfView(btn2);
-            if(gazeInfo.x > point2.x-100 && gazeInfo.x < point2.x+100&& gazeInfo.y > point2.y-100 && gazeInfo.y < point2.y+100) {
-                if(gazeInfo.eyeMovementState == EyeMovementState.FIXATION) {
-                    showToast("Correct X", true);
-                }
-            }
-
         }
     };
 
-    private Point getPointOfView(View view) {
-        int[] location = new int[2];
-        view.getLocationInWindow(location);
-        return new Point(location[0], location[1]);
+
+    public void openDialogFinish(){
+        ExerciseFinishDialog exFinishDialog = new ExerciseFinishDialog();
+        exFinishDialog.show(getSupportFragmentManager(), "exercise finish dialog");
     }
 
     private CalibrationCallback calibrationCallback = new CalibrationCallback() {

@@ -120,28 +120,7 @@
             android:layout_weight="1"
             android:background="@drawable/custom_button"
             android:textColor="#3293DC"
-            android:text="View Week Chart"
-            android:textAllCaps="false"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="690dp"
-        android:layout_marginRight="50dp"
-        android:orientation="horizontal">
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/Button6"
-            android:layout_width="97dp"
-            android:layout_height="80dp"
-            android:layout_weight="1"
-            android:background="@drawable/custom_button"
-            android:textColor="#3293DC"
-            android:text="View Progress Report"
+            android:text="View Weekly Chart"
             android:textAllCaps="false"/>
 
     </LinearLayout>
