@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class Exercise2CorrectDialog extends AppCompatDialogFragment {
+public class Exercise3Dialog extends AppCompatDialogFragment {
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Correct")
-        .setMessage("")
-        .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+        builder.setTitle("Information")
+        .setMessage("This exercise is designed to.... Maintain focus around the icon for 30 seconds to complete this exercise.")
+        .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

@@ -10,9 +10,11 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.provider.Settings;
@@ -23,6 +25,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import camp.visual.gazetracker.GazeTracker;
@@ -36,6 +39,7 @@ import camp.visual.gazetracker.constant.StatusErrorType;
 import camp.visual.gazetracker.device.GazeDevice;
 import camp.visual.gazetracker.filter.OneEuroFilterManager;
 import camp.visual.gazetracker.gaze.GazeInfo;
+import camp.visual.gazetracker.state.EyeMovementState;
 import camp.visual.gazetracker.state.ScreenState;
 import camp.visual.gazetracker.state.TrackingState;
 import camp.visual.gazetracker.util.ViewLayoutChecker;
@@ -52,6 +56,10 @@ public class Exercise3 extends AppCompatActivity {
     private ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private HandlerThread backgroundThread = new HandlerThread("background");
     private Handler backgroundHandler;
+    private TextView countdownText;
+    private CountDownTimer countdownTimer;
+    private long timeleft;
+    private boolean timerStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +68,50 @@ public class Exercise3 extends AppCompatActivity {
         initView();
         checkPermission();
         initHandler();
+        openDialog();
+        timeleft = 20000; //20 seconds
+
+        countdownText = findViewById(R.id.countdownTimer);
     }
+
+    public void openDialog(){
+        Exercise3Dialog ex3Dialog = new Exercise3Dialog();
+        ex3Dialog.show(getSupportFragmentManager(), "exercise3 dialog");
+    }
+
+    public void openDialogFinish(){
+        ExerciseFinishDialog ex1FinishDialog = new ExerciseFinishDialog();
+        ex1FinishDialog.show(getSupportFragmentManager(), "exercise3 finish dialog");
+    }
+
+    public void startTimer(){
+        countdownTimer = new CountDownTimer(timeleft, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeleft = millisUntilFinished;
+                updateTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                openDialogFinish();
+            }
+        }.start();
+        timerStarted = true;
+    }
+
+    public void updateTimer(){
+        int seconds = (int) timeleft / 1000;
+
+        String timeleftText = "00:";
+        if (seconds < 10){
+            timeleftText += "0";
+        }
+        timeleftText += seconds;
+
+        countdownText.setText(timeleftText);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -139,7 +190,7 @@ public class Exercise3 extends AppCompatActivity {
 
 
     // view
-    private Button btn1, btn2, btn3, btn4;
+    private Button btn4;
     private TextureView preview;
     private View viewWarningTracking;
     private PointView viewPoint;
@@ -157,8 +208,6 @@ public class Exercise3 extends AppCompatActivity {
 
     private void initView() {
 
-        btn1 = findViewById(R.id.Button1);
-        btn2 = findViewById(R.id.Button2);
         btn4 = findViewById(R.id.Button4);
 
         btn4.setOnClickListener(new View.OnClickListener() {
@@ -370,10 +419,24 @@ public class Exercise3 extends AppCompatActivity {
                     showTrackingWarning();
                 }
             }
+            Button button = findViewById(R.id.my_button);
+            Point point = getPointOfView(button);
 
+            if(gazeInfo.x > point.x-50 && gazeInfo.x < point.x+250 && gazeInfo.y > point.y-50 && gazeInfo.y < point.y+150) {
+                if (gazeInfo.eyeMovementState == EyeMovementState.FIXATION) {
+                    if(!timerStarted){
+                        startTimer();
+                    }
+                }
+            }
         }
     };
 
+    private Point getPointOfView(View view) {
+        int[] location = new int[2];
+        view.getLocationInWindow(location);
+        return new Point(location[0], location[1]);
+    }
 
     private CalibrationCallback calibrationCallback = new CalibrationCallback() {
         @Override

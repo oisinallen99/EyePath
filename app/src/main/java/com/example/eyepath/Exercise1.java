@@ -392,6 +392,7 @@ public class Exercise1 extends AppCompatActivity {
                 }
                 Log.i(TAG, "check eyeMovement " + gazeInfo.eyeMovementState);
             }
+
             // Button movement
             final Button button = (Button) findViewById(R.id.my_button);
             final DisplayMetrics displaymetrics = new DisplayMetrics();
