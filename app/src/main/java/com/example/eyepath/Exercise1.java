@@ -57,6 +57,7 @@ public class Exercise1 extends AppCompatActivity {
     private ViewLayoutChecker viewLayoutChecker = new ViewLayoutChecker();
     private HandlerThread backgroundThread = new HandlerThread("background");
     private Handler backgroundHandler;
+    private int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +66,19 @@ public class Exercise1 extends AppCompatActivity {
         initView();
         checkPermission();
         initHandler();
+        count = 0;
+        openDialog();
     }
 
+    public void openDialogFinish(){
+        Exercise1FinishDialog ex1FinishDialog = new Exercise1FinishDialog();
+        ex1FinishDialog.show(getSupportFragmentManager(), "exercise1 finish dialog");
+    }
+
+    private void openDialog(){
+        Exercise1Dialog ex1Dialog = new Exercise1Dialog();
+        ex1Dialog.show(getSupportFragmentManager(), "exercise1 dialog");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
@@ -380,24 +392,27 @@ public class Exercise1 extends AppCompatActivity {
                 }
                 Log.i(TAG, "check eyeMovement " + gazeInfo.eyeMovementState);
             }
-
-            // Test Eye Click
-
+            // Button movement
             final Button button = (Button) findViewById(R.id.my_button);
             final DisplayMetrics displaymetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
             Point point = getPointOfView(button);
 
-            if(gazeInfo.x > point.x-150 && gazeInfo.x < point.x+150 && gazeInfo.y > point.y-150 && gazeInfo.y < point.y+150) {
+            if(gazeInfo.x > point.x-50 && gazeInfo.x < point.x+250 && gazeInfo.y > point.y-50 && gazeInfo.y < point.y+150) {
                 if(gazeInfo.eyeMovementState == EyeMovementState.FIXATION) {
                                 Random R = new Random();
-                                final float dx = R.nextFloat() * (displaymetrics.widthPixels - 400);
+                                count ++;
+                                final float dx = R.nextFloat() * (displaymetrics.widthPixels - 150);
                                 final float dy = R.nextFloat() * (displaymetrics.heightPixels - 400);
                                 button.animate()
                                         .x(dx)
                                         .y(dy)
                                         .setDuration(0)
                                         .start();
+                                if(count == 5){
+                                    openDialogFinish();
+                                }
+
 
                 }
                 }

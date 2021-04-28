@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/eyewallpaper2"
+    android:background="@drawable/eyepathwallpaperblue"
     tools:context=".Exercise1">
 
     <TextureView
@@ -24,12 +24,13 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/my_button"
-            android:layout_width="84dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_x="0dp"
             android:layout_y="0dp"
+            android:background="@drawable/custom_button2"
             android:drawableLeft="@drawable/eyeicon" />
 
 </LinearLayout>
@@ -43,11 +44,13 @@
         android:layout_marginRight="120dp">
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/Button4"
         android:layout_width="97dp"
         android:layout_height="50dp"
         android:layout_weight="1"
+        android:background="@drawable/custom_button3"
+        android:textColor="#FFFFFF"
         android:text="Return" />
 
     </LinearLayout>

@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
+        Intent intent = new Intent(getApplicationContext(), Menu.class);
+        startActivity(intent);
     }
-
 
     public void signUp(View view) {
 

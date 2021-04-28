@@ -68,6 +68,7 @@ public class Menu extends AppCompatActivity {
         initView();
         checkPermission();
         initHandler();
+        openDialog();
     }
 
     @Override
@@ -75,6 +76,11 @@ public class Menu extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
+    }
+
+    public void openDialog(){
+        IntroductionDialog introDialog = new IntroductionDialog();
+        introDialog.show(getSupportFragmentManager(), "introduction dialog");
     }
 
     private void initHandler() {
