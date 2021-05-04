@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuInflater;
@@ -25,6 +26,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import camp.visual.gazetracker.GazeTracker;
 import camp.visual.gazetracker.callback.CalibrationCallback;
@@ -64,7 +73,6 @@ public class Menu extends AppCompatActivity {
         toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         initView();
         checkPermission();
         initHandler();
@@ -78,9 +86,9 @@ public class Menu extends AppCompatActivity {
         return true;
     }
 
-    public void openDialog(){
-        IntroductionDialog introDialog = new IntroductionDialog();
-        introDialog.show(getSupportFragmentManager(), "introduction dialog");
+    public void openDialog() {
+                IntroductionDialog introDialog = new IntroductionDialog();
+                introDialog.show(getSupportFragmentManager(), "introduction dialog");
     }
 
     private void initHandler() {
@@ -104,7 +112,6 @@ public class Menu extends AppCompatActivity {
     @RequiresApi(Build.VERSION_CODES.M)
     private boolean hasPermissions(String[] permissions) {
         int result;
-        // Check permission status in string array
         for (String perms : permissions) {
             if (perms.equals(Manifest.permission.SYSTEM_ALERT_WINDOW)) {
                 if (!Settings.canDrawOverlays(this)) {
@@ -113,11 +120,9 @@ public class Menu extends AppCompatActivity {
             }
             result = ContextCompat.checkSelfPermission(this, perms);
             if (result == PackageManager.PERMISSION_DENIED) {
-                // When if unauthorized permission found
                 return false;
             }
         }
-        // When if all permission allowed
         return true;
     }
 
@@ -153,7 +158,6 @@ public class Menu extends AppCompatActivity {
     }
 
 
-    // view
     private TextureView preview;
     private View viewWarningTracking;
     private PointView viewPoint;

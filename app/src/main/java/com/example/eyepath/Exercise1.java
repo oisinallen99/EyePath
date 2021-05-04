@@ -27,6 +27,12 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Random;
 
 import camp.visual.gazetracker.GazeTracker;
@@ -58,6 +64,8 @@ public class Exercise1 extends AppCompatActivity {
     private HandlerThread backgroundThread = new HandlerThread("background");
     private Handler backgroundHandler;
     private int count;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +75,7 @@ public class Exercise1 extends AppCompatActivity {
         checkPermission();
         initHandler();
         count = 0;
+        mAuth = FirebaseAuth.getInstance();
         openDialog();
     }
 
@@ -410,7 +419,8 @@ public class Exercise1 extends AppCompatActivity {
                                         .y(dy)
                                         .setDuration(0)
                                         .start();
-                                if(count == 5){
+                                if(count == 10){
+                                    createCompletedActivity();
                                     openDialogFinish();
                                 }
 
@@ -424,6 +434,17 @@ public class Exercise1 extends AppCompatActivity {
         int[] location = new int[2];
         view.getLocationInWindow(location);
         return new Point(location[0], location[1]);
+    }
+
+    private void createCompletedActivity(){
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        String userID = mUser.getUid();
+        Long tsLong = System.currentTimeMillis();
+        String ts = tsLong.toString();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        CompletedActivity completedActivity = new CompletedActivity(userID, ts);
+        db.child("CompletedActivity").child(ts).setValue(completedActivity);
     }
 
     private CalibrationCallback calibrationCallback = new CalibrationCallback() {
@@ -554,19 +575,18 @@ public class Exercise1 extends AppCompatActivity {
         }
     }
 
-    public void launchMaps(MenuItem item) {
-        startCalibration();
-    }
-
-    public void logout(MenuItem item) {
-        releaseGaze();
-        Intent intent = new Intent(this, MainActivity.class);
+    public void info(MenuItem item) {
+        Intent intent = new Intent(this, Info.class);
         startActivity(intent);
     }
 
-    public void eyeGaze(MenuItem item) {
-        releaseGaze();
+    public void refresh(MenuItem item) {
         Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+    }
+
+    public void logout(MenuItem item) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

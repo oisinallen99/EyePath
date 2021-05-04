@@ -160,7 +160,8 @@
     <visual.camp.sample.view.PointView
         android:id="@+id/view_point"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        />
 
     <visual.camp.sample.view.CalibrationViewer
         android:id="@+id/view_calibration"

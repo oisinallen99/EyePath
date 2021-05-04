@@ -28,6 +28,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import camp.visual.gazetracker.GazeTracker;
 import camp.visual.gazetracker.callback.CalibrationCallback;
 import camp.visual.gazetracker.callback.GazeCallback;
@@ -60,6 +65,8 @@ public class Exercise3 extends AppCompatActivity {
     private CountDownTimer countdownTimer;
     private long timeleft;
     private boolean timerStarted;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +87,20 @@ public class Exercise3 extends AppCompatActivity {
     }
 
     public void openDialogFinish(){
+        createCompletedActivity();
         ExerciseFinishDialog ex1FinishDialog = new ExerciseFinishDialog();
         ex1FinishDialog.show(getSupportFragmentManager(), "exercise3 finish dialog");
+    }
+
+    private void createCompletedActivity(){
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        String userID = mUser.getUid();
+        Long tsLong = System.currentTimeMillis();
+        String ts = tsLong.toString();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        CompletedActivity completedActivity = new CompletedActivity(userID, ts);
+        db.child("CompletedActivity").child(ts).setValue(completedActivity);
     }
 
     public void startTimer(){
@@ -565,19 +584,18 @@ public class Exercise3 extends AppCompatActivity {
         }
     }
 
-    public void launchMaps(MenuItem item) {
-        startCalibration();
-    }
-
-    public void logout(MenuItem item) {
-        releaseGaze();
-        Intent intent = new Intent(this, MainActivity.class);
+    public void info(MenuItem item) {
+        Intent intent = new Intent(this, Info.class);
         startActivity(intent);
     }
 
-    public void eyeGaze(MenuItem item) {
-        releaseGaze();
+    public void refresh(MenuItem item) {
         Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+    }
+
+    public void logout(MenuItem item) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

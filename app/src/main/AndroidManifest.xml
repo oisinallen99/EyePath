@@ -15,9 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EyePath">
-        <activity android:name=".Exercise3"></activity>
+        <activity android:name=".WeekChart"></activity>
+        <activity android:name=".Exercise3" />
         <activity android:name=".Info" />
-        <activity android:name=".WeekChart" />
         <activity android:name=".Exercise2" />
         <activity android:name=".Exercise1" />
         <!--

@@ -26,6 +26,11 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Random;
 
 import camp.visual.gazetracker.GazeTracker;
@@ -57,6 +62,8 @@ public class Exercise2 extends AppCompatActivity {
     private Handler backgroundHandler;
     private int buttonCheck;
     private int count;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -483,8 +490,20 @@ public class Exercise2 extends AppCompatActivity {
 
 
     public void openDialogFinish(){
+        createCompletedActivity();
         ExerciseFinishDialog exFinishDialog = new ExerciseFinishDialog();
         exFinishDialog.show(getSupportFragmentManager(), "exercise finish dialog");
+    }
+
+    private void createCompletedActivity(){
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        String userID = mUser.getUid();
+        Long tsLong = System.currentTimeMillis();
+        String ts = tsLong.toString();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        CompletedActivity completedActivity = new CompletedActivity(userID, ts);
+        db.child("CompletedActivity").child(ts).setValue(completedActivity);
     }
 
     private CalibrationCallback calibrationCallback = new CalibrationCallback() {
@@ -614,19 +633,18 @@ public class Exercise2 extends AppCompatActivity {
         }
     }
 
-    public void launchMaps(MenuItem item) {
-        startCalibration();
-    }
-
-    public void logout(MenuItem item) {
-        releaseGaze();
-        Intent intent = new Intent(this, MainActivity.class);
+    public void info(MenuItem item) {
+        Intent intent = new Intent(this, Info.class);
         startActivity(intent);
     }
 
-    public void eyeGaze(MenuItem item) {
-        releaseGaze();
+    public void refresh(MenuItem item) {
         Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+    }
+
+    public void logout(MenuItem item) {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

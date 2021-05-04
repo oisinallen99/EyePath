@@ -16,7 +16,7 @@ public class Exercise2Dialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Information")
-        .setMessage("This exercise is designed to.... Match the icon at the top 5 times to complete this exercise.")
+        .setMessage("Match the icon at the top 5 times to complete this exercise.")
         .setPositiveButton("Okay!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
