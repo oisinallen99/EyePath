@@ -454,6 +454,8 @@ public class Exercise2 extends AppCompatActivity {
             err = "required permission not granted";
         } else if (error == InitializationErrorType.ERROR_AUTHENTICATE) {
             err = "eye gaze initialization failed";
+            Intent intent = new Intent(this, Exercise2.class);
+            startActivity(intent);
         } else  {
             // Gaze library initialization failure
             // It can ba caused by several reasons(i.e. Out of memory).

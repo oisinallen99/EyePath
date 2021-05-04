@@ -65,6 +65,7 @@ public class Exercise3 extends AppCompatActivity {
     private CountDownTimer countdownTimer;
     private long timeleft;
     private boolean timerStarted;
+    private boolean focusWarning = false;
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
@@ -407,6 +408,8 @@ public class Exercise3 extends AppCompatActivity {
             err = "required permission not granted";
         } else if (error == InitializationErrorType.ERROR_AUTHENTICATE) {
             err = "eye gaze initialization failed";
+            Intent intent = new Intent(this, Exercise3.class);
+            startActivity(intent);
         } else  {
             // Gaze library initialization failure
             // It can ba caused by several reasons(i.e. Out of memory).
@@ -444,7 +447,15 @@ public class Exercise3 extends AppCompatActivity {
             if(gazeInfo.x > point.x-50 && gazeInfo.x < point.x+250 && gazeInfo.y > point.y-50 && gazeInfo.y < point.y+150) {
                 if (gazeInfo.eyeMovementState == EyeMovementState.FIXATION) {
                     if(!timerStarted){
+                        Toast.makeText(Exercise3.this, "Time Started", Toast.LENGTH_SHORT).show();
                         startTimer();
+                    }
+                }
+            } else {
+                if(timerStarted) {
+                    if (!focusWarning) {
+                        Toast.makeText(Exercise3.this, "Keep focusing on the icon!", Toast.LENGTH_SHORT).show();
+                        focusWarning = true;
                     }
                 }
             }
@@ -510,36 +521,12 @@ public class Exercise3 extends AppCompatActivity {
         GazeTracker.initGazeTracker(getApplicationContext(), gazeDevice, licenseKey, initializationCallback);
     }
 
-    private void releaseGaze() {
-        if (isGazeNonNull()) {
-            GazeTracker.deinitGazeTracker(gazeTracker);
-            gazeTracker = null;
-        }
-        setViewAtGazeTrackerState();
-    }
+
 
     private void startTracking() {
         if (isGazeNonNull()) {
             gazeTracker.startTracking();
         }
-    }
-
-    private void stopTracking() {
-        if (isGazeNonNull()) {
-            gazeTracker.stopTracking();
-        }
-    }
-
-    private boolean startCalibration() {
-        boolean isSuccess = false;
-        if (isGazeNonNull()) {
-            isSuccess = gazeTracker.startCalibration(calibrationType);
-            if (!isSuccess) {
-                showToast("calibration start fail", false);
-            }
-        }
-        setViewAtGazeTrackerState();
-        return isSuccess;
     }
 
     // Collect the data samples used for calibration
@@ -550,38 +537,6 @@ public class Exercise3 extends AppCompatActivity {
         }
         setViewAtGazeTrackerState();
         return isSuccess;
-    }
-
-    private void stopCalibration() {
-        if (isGazeNonNull()) {
-            gazeTracker.stopCalibration();
-        }
-        hideCalibrationView();
-        setViewAtGazeTrackerState();
-    }
-
-    private void setCalibration() {
-        if (isGazeNonNull()) {
-            double[] calibrationData = CalibrationDataStorage.loadCalibrationData(getApplicationContext());
-            if (calibrationData != null) {
-                // When if stored calibration data in SharedPreference
-                if (!gazeTracker.setCalibrationData(calibrationData)) {
-                    showToast("calibrating", false);
-                } else {
-                    showToast("setCalibrationData success", false);
-                }
-            } else {
-                // When if not stored calibration data in SharedPreference
-                showToast("Calibration data is null", true);
-            }
-        }
-        setViewAtGazeTrackerState();
-    }
-
-    private void setCameraPreview(TextureView preview) {
-        if (isGazeNonNull()) {
-            //    gazeTracker.setCameraPreview(preview);
-        }
     }
 
     public void info(MenuItem item) {

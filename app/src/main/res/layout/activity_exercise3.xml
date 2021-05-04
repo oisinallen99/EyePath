@@ -28,11 +28,11 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/my_button"
-            android:layout_width="102dp"
-            android:layout_height="101dp"
+            android:layout_width="125dp"
+            android:layout_height="119dp"
             android:background="@drawable/custom_button2"
             android:drawableLeft="@drawable/eyeicon"
-            android:paddingLeft="22dp" />
+            android:paddingLeft="30dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="130dp"
+        android:layout_marginLeft="140dp"
         android:layout_marginTop="500dp">
 
         <TextView

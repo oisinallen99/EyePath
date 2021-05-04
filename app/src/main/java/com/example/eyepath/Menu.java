@@ -390,6 +390,8 @@ public class Menu extends AppCompatActivity {
             err = "required permission not granted";
         } else if (error == InitializationErrorType.ERROR_AUTHENTICATE) {
             err = "eye gaze initialization failed";
+            Intent intent = new Intent(this, Menu.class);
+            startActivity(intent);
         } else  {
             // Gaze library initialization failure
             // It can be caused by several reasons(i.e. Out of memory).
@@ -469,11 +471,9 @@ public class Menu extends AppCompatActivity {
                 switch (error) {
                     case ERROR_CAMERA_START:
                         // When if camera stream can't start
-                        showToast("ERROR_CAMERA_START ", false);
                         break;
                     case ERROR_CAMERA_INTERRUPT:
                         // When if camera stream interrupted
-                        showToast("ERROR_CAMERA_INTERRUPT ", false);
                         break;
                 }
             }

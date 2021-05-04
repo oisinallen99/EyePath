@@ -98,22 +98,22 @@ public class WeekChart extends AppCompatActivity {
 
         BarChart barChart = findViewById(R.id.barChart);
 
-        int count1= Collections.frequency(dates, 29);
-        int count2= Collections.frequency(dates, 30);
-        int count3= Collections.frequency(dates, 1);
-        int count4= Collections.frequency(dates, 2);
-        int count5= Collections.frequency(dates, 3);
-        int count6= Collections.frequency(dates, 4);
-        int count7= Collections.frequency(dates, 5);
+        int count1= Collections.frequency(dates, 1);
+        int count2= Collections.frequency(dates, 2);
+        int count3= Collections.frequency(dates, 3);
+        int count4= Collections.frequency(dates, 4);
+        int count5= Collections.frequency(dates, 5);
+        int count6= Collections.frequency(dates, 6);
+        int count7= Collections.frequency(dates, 7);
 
         ArrayList<BarEntry> activities = new ArrayList<>();
-        activities.add(new BarEntry(29, count1));
-        activities.add(new BarEntry(30, count2));
-        activities.add(new BarEntry(1, count3));
-        activities.add(new BarEntry(2, count4));
-        activities.add(new BarEntry(3, count5));
-        activities.add(new BarEntry(4, count6));
-        activities.add(new BarEntry(5, count7));
+        activities.add(new BarEntry(1, count1));
+        activities.add(new BarEntry(2, count2));
+        activities.add(new BarEntry(3, count3));
+        activities.add(new BarEntry(4, count4));
+        activities.add(new BarEntry(5, count5));
+        activities.add(new BarEntry(6, count6));
+        activities.add(new BarEntry(7, count7));
 
         BarDataSet barDataSet = new BarDataSet(activities, "Completed Activities");
         barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
